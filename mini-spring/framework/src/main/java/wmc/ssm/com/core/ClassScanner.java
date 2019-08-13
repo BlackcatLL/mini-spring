@@ -18,7 +18,7 @@ public class ClassScanner {
         while(resources.hasMoreElements())
         {
             URL resource = resources.nextElement();
-            //å¤„ç†èµ„æºç±»å‹æ˜¯JARåŒ…çš„æƒ…å†µ
+            //´¦Àí×ÊÔ´ÀàĞÍÊÇJAR°üµÄÇé¿ö
             if(resource.getProtocol().contains("jar")){
                 JarURLConnection jarURLConnection = (JarURLConnection)resource.openConnection();
                 String jarFilePath = jarURLConnection.getJarFile().getName();
@@ -31,12 +31,12 @@ public class ClassScanner {
     }
 
     private static List<Class<?>> getClassesFormJar(String jarFilePath,String Path) throws IOException, ClassNotFoundException {
-        List<Class<?>> classes = new ArrayList<>();  //åˆå§‹åŒ–å®¹å™¨æ¥å­˜å‚¨jaråŒ…
+        List<Class<?>> classes = new ArrayList<>();  //³õÊ¼»¯ÈİÆ÷À´´æ´¢jar°ü
         JarFile jarFile = new JarFile(jarFilePath);
         Enumeration<JarEntry> jarEntries = jarFile.entries();
-        while(jarEntries.hasMoreElements()){   //ä¾æ¬¡å¤„ç†jaråŒ…é‡Œçš„JarEntryæ–‡ä»¶
+        while(jarEntries.hasMoreElements()){   //ÒÀ´Î´¦Àíjar°üÀïµÄJarEntryÎÄ¼ş
             JarEntry jarEntry = jarEntries.nextElement();
-            String entryName = jarEntry.getName();  //è·å–JarEntryæ–‡ä»¶åå­— å¦‚wmc/ssm/com/test/Test.class
+            String entryName = jarEntry.getName();  //»ñÈ¡JarEntryÎÄ¼şÃû×Ö Èçwmc/ssm/com/test/Test.class
             if(entryName.startsWith(Path)&&entryName.endsWith(".class")){
                 String classFullName = entryName.replace("/",".").substring(0,entryName.length()-6);
                 classes.add(Class.forName(classFullName));

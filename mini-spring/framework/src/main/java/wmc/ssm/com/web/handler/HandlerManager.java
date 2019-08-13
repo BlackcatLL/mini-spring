@@ -15,34 +15,34 @@ public class HandlerManager {
     public static  void resolveMappingHandler(List<Class<?>> classList){
         for(Class<?> cls : classList){
             if(cls.isAnnotationPresent(Controller.class)){
-                //å¦‚æœcontrolleræ³¨è§£å­˜åœ¨ï¼Œåˆ™è§£æè¿™ä¸ªcontrollerç±»
+                //Èç¹ûcontroller×¢½â´æÔÚ£¬Ôò½âÎöÕâ¸öcontrollerÀà
                 parseHandlerfromController(cls);
             }
         }
     }
 
     private static void parseHandlerfromController(Class<?> cls){
-        //å…ˆåˆ©ç”¨åå°„è·å–åˆ°ç±»çš„æ‰€æœ‰æ–¹æ³•
+        //ÏÈÀûÓÃ·´Éä»ñÈ¡µ½ÀàµÄËùÓĞ·½·¨
         Method[] methods = cls.getDeclaredMethods();
-        //éå†è¿™äº›æ–¹æ³•ï¼Œæ‰¾åˆ°è¢«requestMappingæ³¨è§£çš„æ–¹æ³•
+        //±éÀúÕâĞ©·½·¨£¬ÕÒµ½±»requestMapping×¢½âµÄ·½·¨
         for(Method method : methods){
             if (!method.isAnnotationPresent(RequestMapping.class)){
                 continue;
             }
             String uri = method.getDeclaredAnnotation(RequestMapping.class).value();
             List<String> paramNameList = new ArrayList<>();
-            //ä¾æ¬¡éå†å‚æ•°ï¼Œæ‰¾åˆ°è¢«requestParamæ³¨è§£çš„å‚æ•°
+            //ÒÀ´Î±éÀú²ÎÊı£¬ÕÒµ½±»requestParam×¢½âµÄ²ÎÊı
             for(Parameter parameter : method.getParameters()){
                 if(parameter.isAnnotationPresent(RequestParam.class)){
-                    //ä»æ³¨è§£é‡Œè·å–åˆ°å‚æ•°çš„åå­—
+                    //´Ó×¢½âÀï»ñÈ¡µ½²ÎÊıµÄÃû×Ö
                     paramNameList.add(parameter.getDeclaredAnnotation(RequestParam.class).value());
                 }
             }
-            //æŠŠå‚æ•°åå®¹å™¨è½¬åŒ–ä¸ºæ•°ç»„çš„å½¢å¼
+            //°Ñ²ÎÊıÃûÈİÆ÷×ª»¯ÎªÊı×éµÄĞÎÊ½
             String[] params = paramNameList.toArray(new String[paramNameList.size()]);
-            //æ„é€ mappingHandler
+            //¹¹ÔìmappingHandler
             MappingHandler mappingHandler = new MappingHandler(uri,method,cls,params);
-            //æŠŠæ„é€ å¥½çš„handleræ”¾åˆ°handlerç®¡ç†å™¨çš„é™æ€å±æ€§é‡Œé¢
+            //°Ñ¹¹ÔìºÃµÄhandler·Åµ½handler¹ÜÀíÆ÷µÄ¾²Ì¬ÊôĞÔÀïÃæ
             HandlerManager.mappingHandlerList.add(mappingHandler);
         }
     }

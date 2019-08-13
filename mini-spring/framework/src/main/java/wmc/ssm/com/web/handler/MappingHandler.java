@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MappingHandler {
-    //姣忎釜MappingHandle閮芥槸涓�涓姹傛槧灏勫櫒
+    //每个MappingHandle都是一个请求映射器
     private String uri;
     private Method method;
     private Class<?> controller;
@@ -25,14 +25,14 @@ public class MappingHandler {
         }
 
         Object[] paramters = new Object[args.length];
-        //鏍规嵁鍙傛暟鍚嶄緷娆′粠ServletRequest閲岄潰鑾峰彇鍙傛暟
+        //根据参数名依次从ServletRequest里面获取参数
         for(int i=0;i<args.length;i++){
             paramters[i] = req.getParameter(args[i]);
         }
-        //瀹炰緥鍖朿ontroller
+        //实例化controller
         Object ctl = BeanFactory.getBean(controller);
         Object response = method.invoke(ctl,paramters);
-        //鎶婃柟娉曡繑鍥炵殑缁撴灉鏀惧埌ServletResponse閲屽幓
+        //把方法返回的结果放到ServletResponse里去
         res.getWriter().println(response.toString());
         return true;
     }

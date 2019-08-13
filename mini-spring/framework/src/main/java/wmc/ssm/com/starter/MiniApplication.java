@@ -12,10 +12,10 @@ import java.util.logging.Handler;
 public class MiniApplication {
         public static void run(Class<?> cls,String[] args)
         /**
-         * ä½œä¸ºæ¡†æ¶çš„å…¥å£ç±»ï¼Œä¸€èˆ¬ä¼ å‚ä¸ºåº”ç”¨çš„å…¥å£ç±»ï¼Œ
-         * é€šè¿‡å…¥å£ç±»å°±å¯ä»¥å®šä½åˆ°é¡¹ç›®çš„æ ¹ç›®å½•ï¼Œ
-         * ä¹Ÿå°±èƒ½å¤Ÿè·å–åˆ°åº”ç”¨å…¥å£ç±»çš„ä¿¡æ¯
-         * Sting[] argsè¯¥å‚æ•°æ•°ç»„ä¸€èˆ¬ä¸ºåº”ç”¨å…¥å£ç±»çš„å‚æ•°æ•°ç»„
+         * ×÷Îª¿ò¼ÜµÄÈë¿ÚÀà£¬Ò»°ã´«²ÎÎªÓ¦ÓÃµÄÈë¿ÚÀà£¬
+         * Í¨¹ıÈë¿ÚÀà¾Í¿ÉÒÔ¶¨Î»µ½ÏîÄ¿µÄ¸ùÄ¿Â¼£¬
+         * Ò²¾ÍÄÜ¹»»ñÈ¡µ½Ó¦ÓÃÈë¿ÚÀàµÄĞÅÏ¢
+         * Sting[] args¸Ã²ÎÊıÊı×éÒ»°ãÎªÓ¦ÓÃÈë¿ÚÀàµÄ²ÎÊıÊı×é
          */
         {
             System.out.println("Hello mini-spring");
@@ -23,7 +23,7 @@ public class MiniApplication {
             try {
                 tomcatServer.startServer();
                 List<Class<?>> classList = ClassScanner.scanClasses(cls.getPackage().getName());
-                BeanFactory.initBean(classList);  //åˆ©ç”¨beanFactoryåˆå§‹åŒ–bean
+                BeanFactory.initBean(classList);  //ÀûÓÃbeanFactory³õÊ¼»¯bean
                 HandlerManager.resolveMappingHandler(classList);
                 classList.forEach(it-> System.out.println(it.getName()));
             } catch (Exception e) {

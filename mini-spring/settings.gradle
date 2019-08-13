@@ -1,5 +1,0 @@
-rootProject.name = 'mini-spring'
-include 'frameword'
-include 'test'
-include 'framework'
-

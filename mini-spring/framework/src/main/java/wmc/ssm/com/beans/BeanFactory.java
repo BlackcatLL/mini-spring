@@ -9,36 +9,36 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BeanFactory {
-    //æ·»åŠ ä¸€ä¸ªå±æ€§ç”¨æ¥å‚¨å­˜beanç±»å‹åˆ°beanå®ä¾‹çš„æ˜ å°„
-    //é€šè¿‡beanç±»å‹åœ¨å®ä¾‹é‡Œå–åˆ°å¯¹åº”çš„bean
+    //Ìí¼ÓÒ»¸öÊôĞÔÓÃÀ´´¢´æbeanÀàĞÍµ½beanÊµÀıµÄÓ³Éä
+    //Í¨¹ıbeanÀàĞÍÔÚÊµÀıÀïÈ¡µ½¶ÔÓ¦µÄbean
     private  static Map<Class<?>,Object> classToBean = new ConcurrentHashMap<>();
 
-    //æ·»åŠ ä¸€ä¸ªæ–¹æ³•ï¼Œä»æ˜ å°„ä¸­è·å¾—bean
+    //Ìí¼ÓÒ»¸ö·½·¨£¬´ÓÓ³ÉäÖĞ»ñµÃbean
     public static Object getBean(Class<?> cls){
         return classToBean.get(cls);
     }
 
-    //beanåˆå§‹åŒ–æ–¹æ³•
+    //bean³õÊ¼»¯·½·¨
     public static  void initBean(List<Class<?>> classList) throws Exception {
-        //åˆ›å»ºä¸€ä¸ªæ–°çš„å®¹å™¨
+        //´´½¨Ò»¸öĞÂµÄÈİÆ÷
         List<Class<?>> toCreate = new ArrayList<>(classList);
-        //åˆå§‹åŒ–bean
+        //³õÊ¼»¯bean
         while (toCreate.size() != 0){
-            int remainSize = toCreate.size();  //å®šä¹‰å˜é‡ä¿å­˜å½“å‰å®¹å™¨å¤§å°
+            int remainSize = toCreate.size();  //¶¨Òå±äÁ¿±£´æµ±Ç°ÈİÆ÷´óĞ¡+++++
             for(int i=0;i<toCreate.size();i++){
-                //å¦‚æœå®Œæˆåˆ›å»º,å°±ä»å®¹å™¨é‡Œåˆ é™¤
+                //Èç¹ûÍê³É´´½¨,¾Í´ÓÈİÆ÷ÀïÉ¾³ı
                 if(finishCreate(toCreate.get(i))){
                     toCreate.remove(i);
                 }
             }
-            //ç±»å®šä¹‰å®¹å™¨æ¯æ¬¡éå†å®Œåéƒ½è¦åˆ¤æ–­å¤§å°æœ‰æ— å˜åŒ–ï¼Œè‹¥æ— å˜åŒ–åˆ™æ˜¯é™·å…¥äº†æ­»å¾ªç¯åˆ™æŠ›å‡ºå¼‚å¸¸
+            //Àà¶¨ÒåÈİÆ÷Ã¿´Î±éÀúÍêºó¶¼ÒªÅĞ¶Ï´óĞ¡ÓĞÎŞ±ä»¯£¬ÈôÎŞ±ä»¯ÔòÊÇÏİÈëÁËËÀÑ­»·ÔòÅ×³öÒì³£
             if(toCreate.size() == remainSize){
                 throw new Exception("cycle dependency!");
             }
         }
     }
 
-    //å…ˆåˆ¤æ–­ç±»æ˜¯å¦éœ€è¦åˆå§‹åŒ–ä¸ºBeanï¼Œè‹¥æ— éœ€åˆå§‹åŒ–ä¸ºBeanï¼Œåˆ™ç›´æ¥è¿”å›TUREï¼Œå¹¶ä»åˆå§‹åŒ–è¿”å›åˆ—è¡¨ä¸­åˆ é™¤
+    //ÏÈÅĞ¶ÏÀàÊÇ·ñĞèÒª³õÊ¼»¯ÎªBean£¬ÈôÎŞĞè³õÊ¼»¯ÎªBean£¬ÔòÖ±½Ó·µ»ØTURE£¬²¢´Ó³õÊ¼»¯·µ»ØÁĞ±íÖĞÉ¾³ı
 
     private static boolean finishCreate (Class<?> cls) throws IllegalAccessException, InstantiationException {
         if(!cls.isAnnotationPresent(Bean.class) && !cls.isAnnotationPresent(Controller.class)){
@@ -46,19 +46,19 @@ public class BeanFactory {
         }
         Object bean = cls.newInstance();
         for(Field field : cls.getDeclaredFields()){
-            //è‹¥å±æ€§è¢«autoWiredæ ‡è®°åˆ™è¡¨ç¤ºå®ƒéœ€è¦ä½¿ç”¨ä¾èµ–æ³¨å…¥æ¥è§£å†³è¿™ä¸ªä¾èµ–
+            //ÈôÊôĞÔ±»autoWired±ê¼ÇÔò±íÊ¾ËüĞèÒªÊ¹ÓÃÒÀÀµ×¢ÈëÀ´½â¾öÕâ¸öÒÀÀµ
             if(field.isAnnotationPresent(AutoWired.class)){
                 Class<?> fieldType = field.getType();
-                Object reliantBean = BeanFactory.getBean(fieldType); //é€šè¿‡ç±»å‹ä»BeanFactoryé‡Œè·å–Bean
-                //è‹¥ä¾èµ–çš„Beanä¸å­˜åœ¨
+                Object reliantBean = BeanFactory.getBean(fieldType); //Í¨¹ıÀàĞÍ´ÓBeanFactoryÀï»ñÈ¡Bean
+                //ÈôÒÀÀµµÄBean²»´æÔÚ
                 if(reliantBean == null){
                     return  false;
                 }
-                field.setAccessible(true);  //è®¾ç½®å¯æ¥è§¦æ€§
-                field.set(bean,reliantBean);  //é€šå­—æ®µçš„setæ–¹æ³•ç›´æ¥è®¾å€¼
+                field.setAccessible(true);  //ÉèÖÃ¿É½Ó´¥ĞÔ
+                field.set(bean,reliantBean);  //Í¨×Ö¶ÎµÄset·½·¨Ö±½ÓÉèÖµ
             }
         }
-        //å­—æ®µå¤„ç†å®Œåå°±å¯ä»¥æŠŠbeanæ”¾åˆ°beanFactoryä¸­ï¼Œå¹¶è¿”å›true
+        //×Ö¶Î´¦ÀíÍêºó¾Í¿ÉÒÔ°Ñbean·Åµ½beanFactoryÖĞ£¬²¢·µ»Øtrue
         classToBean.put(cls,bean);
         return true;
     }
