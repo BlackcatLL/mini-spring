@@ -1,0 +1,24 @@
+github账号：786829429@qq.com
+         密码：a347546941
+①打开git bash 输入用户名和邮箱：$ git config --global user.name "Your Name"
+			        $ git config --global user.email "email@example.com"
+②.先用cd指令进入本地项目路径，如：cd “F:\testdemo”
+③.  //创建说明文档 touch README.md
+     初始化本地仓库  git init
+④.把github仓库里的代码pull下来
+	git pull --rebase /*github项目地址，如：http://github.com/.... */
+⑤.把新增代码添加上去再提交
+新增：	git.add .  /*  点号.前有一个空格*/
+提交：	git commit -m "添加描述"
+⑥.最后再push项目就ok了
+	git push /*项目地址，如上↑ */
+
+
+
+更新项目到github
+在github本地仓库右键选择Git Bash Here
+依次输入如下指令即可：
+git status		//查看状态
+git add .            //添加仓库内全部
+git commit -m "本次更新的说明"
+git push origin master # 将本地主分支推到远程主分支

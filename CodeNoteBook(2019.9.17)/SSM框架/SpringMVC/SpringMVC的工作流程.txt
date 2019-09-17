@@ -1,0 +1,39 @@
+流程：
+1.用户发送请求到前端控制器DispatcherServlet
+2.DispatchServlet收到请求调用HandlerMapping处理器映射器
+3.处理器映射器找到具体的处理器，生成处理器对象及处理器拦截器（如果有的话就生成）一并返回给DispatcherServlet
+4.DispatcherServlet调用HandlerAdapter处理器适配器
+5.HandleAdapter经过适配调用具体的处理器（Controller，也叫后端控制器）
+6.Controller执行完成后返回ModelAndView
+7.HandlerAdapter将Controller执行结果ModelAndView返回给DispatcherServlet
+8.DispatcherServlet将ModelAndView传给ViewReslover视图解析器
+9.ViewReslover解析后返回具体View
+10.DispatcherServlet根据View进行渲染视图（即将模型书库填充到视图中）
+11.DispatcherServlet响应用户
+
+流程图例：
+用户请求---（发送给）-->DispatcherServlet（前端控制器）---(调用)-->HandlerMapping(处理器映射器)
+		        后执行   |	     先执行|				|
+			      |		|				|
+			   (调用)	          (返回给)			           (生  成)
+			      |		|				|
+			      |		|				|
+		         HandlerAdapter	<-------处理器对象和处理器拦截器-----<
+			     |
+			     |
+		          (经过适配调用)
+			     |
+			     |
+	 	 Controller（后端控制器）---(执行完成返回)--->ModelAndView
+
+HandlerAdapter---(把ModelAndView传给)-->DispatcherServlet---(把ModleAndView传给)
+								|
+								|
+						     ViewResolver（视图解析器）
+								|
+								|
+							        (解析返回)
+								|
+								|
+							            View
+DispatcherServlet---(根据View渲染视图再返回给)-->用户

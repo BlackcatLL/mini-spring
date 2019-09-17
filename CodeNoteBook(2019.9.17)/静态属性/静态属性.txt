@@ -1,0 +1,42 @@
+静态属性和方法必须用static修饰符
+static 可以修饰属性、方法、代码块、内部类
+
+静态属性和非静态属性的区别：
+1、在内存中存放位置不同   所有带static修饰符的属性或者方法都存放在内存中的方法区  而非静态属性存放在内存中的堆区
+
+2、出现时机不同   静态属性或方法在没创建对象之前就已经存在  而非静态属性在创建对象之后才存在
+
+3、静态属性是在某个类中的所有对象是共享的
+
+4、生命周期不同  静态属性在类消失之后才销毁  而非晶态属性在对象销毁之后才销毁
+
+5、用法：
+
+　　a.静态属性可以直接通过类名直接访问  非静态属性不能通过类直接访问只能通过对象访问
+
+　　b.二者的相同点是都可以在创建完对象后使用下面看个静态属性是在某个类中的所有对象是共享的例子 最后结果都是20
+
+class Beauty
+{
+    int age1;
+    static int age2;
+}
+ 
+class TestPerson
+{
+     
+    public static void main(String[] args)
+    {  
+ 
+        Beauty b1 = new Beauty();
+        b1.age2 = 10;
+ 
+        Beauty b2 = new Beauty();
+        b2.age2 = 20;
+         
+        System.out.println(b1.age2);
+        System.out.println(b2.age2);
+ 
+        System.out.print("\n");
+    }
+}

@@ -1,0 +1,23 @@
+一.Java集合类主要有以下几种：
+①.Link结构的集合类：ArrayList，LinkedList，Vector,Stack;
+②.Map结构的集合类：HashMap,HashTable;
+③.Set结构的集合类:HashSet,TreeSet;
+④.Queue结构的集合：Queue接口。
+
+二.HashMap和HashTable都是Java的集合类，都可以用来存放Java对象，这是它们的共同点，但它们也是有区别的：
+①.历史原因：HashhTable是基于陈旧的Dictionary类的，HashMap是Java1.2引进的Map接口的一个实现。
+②.同步性：HashTable是同步的，这个类中的一些方法保证了HashTable的对象是线程安全的，而HashMap是异步的，
+因此HashMap中的对象并不是线程安全的。因为同步的需求会影响执行的效率，所以在不需要线程安全时，HashMap会是更好的选择，可以避免同步带来的性能开销，影响效率，要求线程安全的话还可以选择ConCurrentHashMap。
+③.值：HashMap可以让你将空值作为一个表的条目的KEY或Value，而且KEY只能有一个null，但是HashTable是不能放入空值（null）的。
+④.扩容及初始大小：hashmap默认为2^4=16,每次会扩容为2n，hashtable默认大小为11，每次会扩容为2n+1。而且如果给的初始大小的话，hashtable会直接使用给定大小，而hashmap会把它扩充到2的幂次方大小作为初始大小(HashMap 中的 tableSizeFor() 方法保证)。
+⑤.底层数据结构： JDK1.8 以后的 HashMap 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。
+三.ArrayList和Vector的区别：ArrayList与Vector都是Java的集合类，都可以用来存放Java对象，这是相同点。
+①.同步性：Vector是同步的，这个类中的一些方法保证了vector中的对象是线程安全的，而ArrayList是异步的（同Hash）
+②.数据增长：从内部实现机制来讲ArrayList和Vector都是使用数组Array来控制集合中的对象，当你向这两种类型中增加元素时，如果元素的数目超过了内部数组的长度，Vector缺省情况下会自动增长原来一倍的数组长度，而ArrayList会增长50%，
+所以最后你获得的这个纸盒所占的空间总是比你实际需求的更大，所以你如果要在集合中保存大量的数据，则Vector会有一些优势，因为你可以通过设置集合的初始化大小来避免不必要的资源开销。
+
+四.集合类使用的取舍。
+①.如果要求线程安全，使用Vector，HashTable；
+②.如果不要求线程安全，使用ArrayList，HashMap，LinkedList；
+③.如果要求键值对，这是用HashMap,HashTable；
+④.如果要求数据量大，而且需要线程安全则使用Vector。

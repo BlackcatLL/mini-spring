@@ -1,0 +1,57 @@
+Redis-cli 命令不能用
+bash: redis-cli: command not found...
+　　环境：
+
+　　　　Linux7.X
+
+　　
+
+　　在运行redis-cli命令的时候提示错误：
+
+　　
+
+ 
+
+　　解决方案：
+
+　　1. wget http://download.redis.io/redis-stable.tar.gz（下载redis-cli的压缩包）
+
+　　2. 解压：
+
+　　　　# tar -zxf redis-stable.tar.gz -C /u02/app
+
+　　　　解析：
+
+　　　　　　参数：-C （大写的字母C） 当解压到指定目录的时候，需要用上这个参数。
+
+　　　　由于我的redis都是安装在 /u02/app 这个目录里面的，故将其解压到 /u02/app目录中。
+
+　　　　
+
+ 
+
+ 　　　3. 进入解压的文件中.
+
+　　　　　# cd redis-stable
+
+　　　4.  进行编译
+
+　　　　    # make
+
+　　　5. 编译完成后，切换到root用户，进入/u01/app/redis-stable/src目录中，找到 redis-cli，将其copy到/usr/local/bin目录中.
+
+                 # su - root (执行后该 命令后会提示排入root密码)
+
+　　　　   # cd /u01/app/redis-stable/src
+
+　　          #  ls -l redis-cli
+
+                 # cp redis-cli /usr/local/bin
+
+                 
+
+　　　　
+
+　　  6. 上面步骤执行后，在任何目录下都可以进行使用：redis-cli命令了。
+
+　　　　第5步，切换root是因为普通用户不能往 /usr/local/bin 目录中copy文件.

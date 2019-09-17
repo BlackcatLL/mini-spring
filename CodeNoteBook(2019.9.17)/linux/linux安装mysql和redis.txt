@@ -1,0 +1,141 @@
+linux下如何安装mysql和redis
+
+原文链接：https://www.cnblogs.com/Kingfan1993/p/10270333.html
+
+linux下如何安装mysql(mariadb)
+
+linux下如何安装软件？
+1. yum安装软件也得注意，一个是配置yum源
+    1.我们当前的是阿里云的yum源(下载速度特别快)
+    通过
+    yum install  mariadb  发现版本如下，版本特别低，且安装包特别小，
+    
+    mariadb                        x86_64                   1:5.5.60-1.el7_5                   base                   8.9 M
+    
+    2.我们可以配置mariadb官方的yum源（官方的mariadb包一定是最新的，最好的，功能最全的，但是下载速度可能很慢）
+    配置官方mariadb的yum源步骤
+    1.新建一个yum源仓库
+        touch /etc/yum.repos.d/Mariadb.repo 
+    2.在这个yum源仓库文件中，添加仓库url地址
+        [mariadb]
+        name = MariaDB
+        baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+        gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+        gpgcheck=1
+        
+    3.一条命令安装mariadb
+    yum install MariaDB-server MariaDB-client -y
+    
+
+
+由于官方的下载网速忒慢了，我们学习使用阿里云的mariadb数据库
+由于官方的下载网速忒慢了，我们学习使用阿里云的mariadb数据库
+由于官方的下载网速忒慢了，我们学习使用阿里云的mariadb数据库
+只需要修改/etc/yum.repos.d/Mariadb.repo  重命名这个文件
+mv /etc/yum.repos.d/Mariadb.repo  /etc/yum.repos.d/Mariadb.repo.bak 
+
+    4.我们使用阿里云的mariadb
+     yum install mariadb-server mariadb -y  
+     
+     
+    启动mariadb数据库
+    systemctl   start/stop/status/restart    mariadb 
+     
+    5.安装完毕mariadb，初始化数据库
+    mysql_secure_installation     直接输入这条命令
+    
+    6.登录数据库
+    mysql -uroot -p 
+    
+    7.设置mariadb数据库支持中文
+    vim /etc/my.cnf 配置文件，写入如下配置
+    [root@qishione yum.repos.d]# cat /etc/my.cnf
+            [mysqld]
+            character-set-server=utf8
+            collation-server=utf8_general_ci
+            log-error=/var/log/mysqld.log
+            datadir=/var/lib/mysql
+            socket=/var/lib/mysql/mysql.sock
+            # Disabling symbolic-links is recommended to prevent assorted security risks
+            symbolic-links=0
+            # Settings user and group are ignored when systemd is used.
+            # If you need to run mysqld under a different user or group,
+            # customize your systemd unit file for mariadb according to the
+            # instructions in http://fedoraproject.org/wiki/Systemd
+            [client]
+            default-character-set=utf8
+            [mysql]
+            default-character-set=utf8
+            [mysqld_safe]
+            log-error=/var/log/mariadb/mariadb.log
+            pid-file=/var/run/mariadb/mariadb.pid
+
+            #
+            # include all files from the config directory
+            #
+            !includedir /etc/my.cnf.d
+
+
+    8.重启数据库服务，加载/etc/my.cnf 
+    systemctl restart mariadb 
+    
+    9.登录新的数据库，查看中文编码设置
+    MariaDB [(none)]> \s
+
+    10.查看数据库的编码设置，以及表的设置
+    show create database qishi1;
+    show create  table   shenqu;
+    
+    11.在支持utf-8的数据库下，创建新的数据库，以及数据表
+    
+    
+    
+    
+redis数据库的安装配置:
+    1.安装方式可以yum，可以编译，可以rpm
+    1.使用编译安装
+        1.下载redis源码包
+        wget http://download.redis.io/releases/redis-4.0.10.tar.gz
+        2.解压缩redis源码包
+        tar -zxvf  redis-4.0.10.tar.gz
+        
+        3.进入redis源码包目录
+        cd redis-4.0.10
+        
+        3.编译且安装
+        make && make install 
+
+        4.启动redis服务端，通过redis-6379.conf自定制配置参数去自动
+        在redis-6379.conf配置文件中，定制一些安全参数
+                                端口更改
+                                后台运行
+                                设置redis密码
+                                设置redis启动ip地址
+        redis-6380.conf配置如下
+            port 6380                       #运行在6380的redis数据库实例
+            daemonize yes                     #后台运行redis  
+            pidfile /data/6380/redis.pid    #存放redis pid的文件
+            loglevel notice                 #日志等级
+            logfile "/data/6380/redis.log"  #指定redis日志文件的生成目录
+            dir /data/6380                  #指定redis数据文件夹的目录
+            protected-mode yes 
+            requirepass   haohaio           #设置redis的密码
+
+        5.启动redis服务端，指定配置文件启动
+        redis-server   redis-6380.conf 
+    
+        6.访问redis数据库
+        redis-cli  -p 6380  -a  haohaio  
+            -p  设置redis链接的端口
+            -a  显示的填写密码
+            
+        auth  haihaoo  
+        
+        7.测试写入redis数据
+    
+2. 源码包编译安装  (可自定制功能，且安装最新的软件)
+
+
+
+
+3. 手动rpm安装   舍弃
