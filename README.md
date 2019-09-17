@@ -1,1 +1,1 @@
-# mini-spring
+# not only mini-spring
