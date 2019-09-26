@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BorderTest</title>
+</head>
+<body>
+<div id="a">这是一个div
+<table border="1" cellspacing="0" cellpadding="2"
+       width="100px">
+    <tr>
+        <td colspan="2" rowspan="2">&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+
+</div>
+<button onclick="b()">点击</button>
+<script>
+    var b=function () {
+        alert(document.getElementById("a").innerHTML)
+    }
+</script>
+</body>
+</html>

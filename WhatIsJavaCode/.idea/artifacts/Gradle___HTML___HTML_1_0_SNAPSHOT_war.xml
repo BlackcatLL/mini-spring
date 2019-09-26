@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Gradle : HTML : HTML-1.0-SNAPSHOT.war">
+    <output-path>$PROJECT_DIR$/HTML/build/libs</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$/HTML" />
+    </properties>
+    <root id="archive" name="HTML-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Gradle : HTML : HTML-1.0-SNAPSHOT.war (exploded)" />
+    </root>
+  </artifact>
+</component>

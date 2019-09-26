@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="HTML.HTML.main" target="1.8" />
+      <module name="HTML.HTML.test" target="1.8" />
+      <module name="TESTDEMO.HTML.HTML.main" target="1.8" />
+      <module name="TESTDEMO.HTML.HTML.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
